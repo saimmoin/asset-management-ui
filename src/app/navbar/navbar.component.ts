@@ -17,9 +17,22 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private authSubscription!: Subscription;
   private roleSubscription!: Subscription;
 
+  // Array of possible icons
+  private icons: string[] = ['user', 'person', 'profile'];
+  selectedIcon!: string; // Store the selected icon
+  
+  // Method to get random icon
+  getRandomIcon(): string {
+    const randomIndex = Math.floor(Math.random() * this.icons.length);
+    return this.icons[randomIndex];
+  }
+
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
+
+    this.selectedIcon = this.getRandomIcon();
+
     // Subscribe to authentication state changes
     this.authSubscription = this.authService.isAuthenticated$.subscribe(
       (isAuth) => {
